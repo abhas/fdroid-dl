@@ -1,13 +1,40 @@
 # fdroid-dl
-Is a python based f-droid mirror generation and update utility. Point at one or more existing f-droid repositories and the utility will download the metadata (pictures, descriptions,..) for you and place it in your local system. Simply run ```fdroid-dl && fdroid update``` and you are set.
+Is a python based f-droid mirror generation and update utility. Point at one or more existing f-droid repositories and the utility will download the metadata (pictures, descriptions,..) for you and place it in your local system. Simply run `fdroid-dl && fdroid update` and you are set.
 
 ## Motivation
 The idea is to have an no internet local copy of one or more repositories, without the need to compile the thousands of apps on your own build server but rather download them like the android client does. So this tool came into existence to simply download a while repository and import the apps into your own locally installed one. At the time of writing a full offline copy including assets is ~7.5GB of the official repository of f-droid.org.
 
 # Installation
-fdroid-dl is available via pip, simply run ```pip install fdroid-dl``` and you can use ```fdroid-dl``` on your command line.
+fdroid-dl is available via pip, simply run `pip install fdroid-dl` and you can use `fdroid-dl` on your command line.
+
+# Installation with Docker
+
+## Build the Docker container
+
+### For x86_64
+
+`docker build -t fdroid-dl --rm .`
+
+### For armhf (Raspberry Pi / Odroid XU4)
+
+`docker build -t fdroid-dl:armhf -f Dockerfile.armhf --rm .`
+
+## Run the container
+
+### Create the volume
+
+`mkdir /opt/fdroid-dl`
+
+### Create the config file
+
+`echo '{}' > /opt/fdroid-dl/fdroid-dl.json`
+
+### Run the container
+
+`docker run -ti -v /opt/fdroid:/opt/fdroid fdroid-dl fdroid-dl -c ./fdroid-dl.json -d update`
 
 # Documentation
+
 Can be found at [fdroid-dl.readthedocs.io](https://fdroid-dl.readthedocs.io/en/latest/)
 
 # Command Line Options
